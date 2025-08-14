@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Sales — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/dashboard">Admin</a> / Sales</nav>
+<form id="sales-filters" class="filters">
+	<input type="date" name="date_from" />
+	<input type="date" name="date_to" />
+	<select name="payment_method"><option value="">Any Payment</option></select>
+	<button type="submit">Filter</button>
+	<button type="button" id="export-sales">Export CSV</button>
+</form>
+<table id="sales-table" class="table"></table>
+{% endblock %}

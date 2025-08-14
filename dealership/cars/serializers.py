@@ -41,3 +41,32 @@ class CarSerializer(serializers.ModelSerializer):
             "photos",
         ]
         read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class CarListSerializer(serializers.ModelSerializer):
+    photos = CarPhotoSerializer(many=True, read_only=True)
+    price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Car
+        fields = [
+            "id",
+            "vin",
+            "make",
+            "model",
+            "year",
+            "mileage",
+            "fuel_type",
+            "transmission",
+            "body_type",
+            "base_price",
+            "discount_price",
+            "currency",
+            "status",
+            "price",
+            "photos",
+        ]
+        read_only_fields = ["id"]
+
+    def get_price(self, obj):
+        return obj.discount_price if obj.discount_price is not None else obj.base_price

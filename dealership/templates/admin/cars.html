@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin Cars — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/dashboard">Admin</a> / Manage Cars</nav>
+<div class="admin-quick-actions" role="toolbar">
+	<a class="button" href="/admin/cars/new" title="Add New Car (A)">Add New Car</a>
+	<button id="bulk-sold" title="Mark selected as Sold (M)">Mark Sold</button>
+	<button id="export-csv" title="Export CSV (E)">Export CSV</button>
+	<label class="file-input">CSV Import (UI only)
+		<input type="file" id="import-csv" accept=".csv" />
+	</label>
+</div>
+<table id="cars-table" class="table selectable" aria-label="Cars table"></table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Cars — DriveWise{% endblock %}
+{% block content %}
+<h1>Browse Cars</h1>
+<form id="cars-filters" class="filters" aria-label="Filter cars">
+	<input type="search" name="search" placeholder="Search make/model/VIN" />
+	<select name="make" aria-label="Make"><option value="">Any Make</option></select>
+	<select name="model" aria-label="Model"><option value="">Any Model</option></select>
+	<select name="fuel_type" aria-label="Fuel Type"><option value="">Fuel</option></select>
+	<select name="body_type" aria-label="Body Type"><option value="">Body</option></select>
+	<select name="transmission" aria-label="Transmission"><option value="">Trans</option></select>
+	<input type="number" name="min_price" placeholder="Min Price" />
+	<input type="number" name="max_price" placeholder="Max Price" />
+	<select name="ordering" aria-label="Sort by">
+		<option value="-created_at">Newest</option>
+		<option value="price">Price: Low to High</option>
+		<option value="-price">Price: High to Low</option>
+		<option value="mileage">Mileage</option>
+	</select>
+	<button type="submit">Apply</button>
+	<button type="button" id="clear-filters">Clear</button>
+</form>
+<div id="cars-list" class="grid cars-grid" aria-live="polite"></div>
+<nav id="cars-pagination" aria-label="Pagination"></nav>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Car Details — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/cars">Cars</a> / <span id="car-breadcrumb"></span></nav>
+<section id="car-detail" class="car-detail">
+	<div class="gallery" id="car-gallery" aria-label="Photo gallery"></div>
+	<aside class="summary">
+		<h1 id="car-title"></h1>
+		<p id="car-price"></p>
+		<button id="audit-trail-btn" class="secondary">View Audit Trail</button>
+		<div id="car-specs"></div>
+		<div class="book-widget" aria-labelledby="book-drive-title">
+			<h2 id="book-drive-title">Book a Test Drive</h2>
+			<label>Date
+				<input type="date" id="book-date" aria-describedby="slot-help" />
+			</label>
+			<div id="slot-help">Select an available 1-hour slot between 09:00 and 16:00.</div>
+			<div id="slots-grid" class="slots-grid" role="listbox" aria-label="Available slots"></div>
+			<button id="confirm-booking" disabled>Confirm Booking</button>
+		</div>
+	</aside>
+</section>
+<div id="audit-drawer" class="drawer" hidden>
+	<h3>Audit Trail</h3>
+	<p>Placeholder activity log for this car.</p>
+	<button id="close-audit">Close</button>
+</div>
+<div id="error-modal" class="modal" hidden role="alertdialog" aria-modal="true" aria-labelledby="error-title">
+	<div class="modal-content">
+		<h3 id="error-title">Error</h3>
+		<p id="error-message"></p>
+		<button class="button" id="close-error">Close</button>
+	</div>
+</div>
+<div id="login-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+	<div class="modal-content">
+		<h3 id="login-modal-title">Login required</h3>
+		<p>You need to log in to book a test drive.</p>
+		<a class="button" href="/auth/login">Login</a>
+		<button class="button secondary" id="close-login-modal" aria-label="Close">Close</button>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sign Up — DriveWise{% endblock %}
+{% block content %}
+<h1>Create your account</h1>
+<form id="register-form">
+	<label>Full Name
+		<input type="text" name="full_name" required />
+	</label>
+	<label>Email
+		<input type="email" name="email" required autocomplete="email" />
+	</label>
+	<label>Phone
+		<input type="tel" name="phone" required />
+	</label>
+	<label>Password
+		<input type="password" name="password" required minlength="8" autocomplete="new-password" />
+	</label>
+	<label>Confirm Password
+		<input type="password" name="confirm_password" required minlength="8" autocomplete="new-password" />
+	</label>
+	<label>
+		<input type="checkbox" name="accept_terms" required aria-describedby="terms-desc" /> I agree to the Terms
+	</label>
+	<p id="terms-desc">By creating an account, you agree to our <a href="/terms" target="_blank" rel="noopener">Terms</a>, <a href="/privacy" target="_blank" rel="noopener">Privacy</a>, and <a href="/cookies" target="_blank" rel="noopener">Cookies</a>.</p>
+	<button type="submit">Create account</button>
+</form>
+<div id="register-success" role="status" hidden>Check your email to verify your account. You can now log in.</div>
+<div id="register-errors" class="form-errors" role="alert"></div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<section class="dev-notes" hidden>
+	<h2>API Placeholders</h2>
+	<pre>
+GET /api/cars?search=&make=&model=&page=&size=&ordering= -> { results: Car[], count, next, previous }
+GET /api/cars/{id} -> Car
+GET /api/cars/{id}/available-slots?date=YYYY-MM-DD -> { slots: [{startAt, endAt}] }
+POST /api/bookings { car: UUID, start_at: ISOString } -> 201 { id, status, start_at, end_at }
+GET /api/bookings/me -> [Booking]
+PATCH /api/bookings/{id}/reschedule { start_at } -> { status, start_at, end_at }
+PATCH /api/bookings/{id}/cancel-mine -> { status }
+
+POST /api/auth/register { full_name, email, phone, password, accept_terms } -> 201 { id, ... }
+POST /api/auth/login { username, password } -> { access, refresh, user }
+GET /api/auth/me -> { id, email, role, ... }
+PATCH /api/auth/me -> { ... }
+POST /api/auth/password/forgot { email } -> 200
+POST /api/auth/password/reset?token= -> 200
+
+GET/POST/PATCH/DELETE /api/staff/ (ADMIN only)
+GET /api/staff/{id}/metrics -> { total_sales_count, total_revenue }
+
+GET/POST/PATCH/DELETE /api/sales/ (ADMIN or SALES)
+	</pre>
+</section>

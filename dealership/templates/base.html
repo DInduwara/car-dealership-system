@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>{% block title %}DriveWise{% endblock %}</title>
+	<meta name="description" content="DriveWise Car Dealership" />
+	<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+	<header aria-label="Main Navigation">
+		<nav class="container">
+			<a href="/" class="logo" aria-label="DriveWise Home">DriveWise</a>
+			<ul class="nav">
+				<li><a href="/cars">Cars</a></li>
+				<li><a href="/bookings">Bookings</a></li>
+				<li><a href="/profile">Profile</a></li>
+				<li><a href="/auth/login" id="nav-login">Login</a></li>
+				<li><a href="/auth/register" id="nav-register">Sign Up</a></li>
+				<li><button id="nav-logout" hidden>Logout</button></li>
+			</ul>
+			<ul class="nav admin-nav" hidden>
+				<li><a href="/admin/dashboard">Admin</a></li>
+				<li><a href="/admin/cars">Manage Cars</a></li>
+				<li><a href="/admin/bookings">Bookings</a></li>
+				<li><a href="/admin/staff">Staff</a></li>
+				<li><a href="/admin/sales">Sales</a></li>
+			</ul>
+			<ul class="nav staff-nav" hidden>
+				<li><a href="/staff/dashboard">Staff</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main class="container" id="app-root">
+		{% block content %}{% endblock %}
+	</main>
+	<footer class="container" aria-label="Footer">
+		<div class="footer-links">
+			<a href="/terms">Terms of Service</a>
+			<a href="/privacy">Privacy Policy</a>
+			<a href="/cookies">Cookie Policy</a>
+		</div>
+		<div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+	</footer>
+	<script src="/static/app.js"></script>
+</body>
+</html>
