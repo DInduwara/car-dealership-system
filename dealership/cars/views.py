@@ -8,7 +8,7 @@ from users.permissions import IsAdminOrSales
 
 from .filters import CarFilter
 from .models import Car, CarPhoto
-from .serializers import CarPhotoSerializer, CarSerializer
+from .serializers import CarPhotoSerializer, CarSerializer, CarListSerializer
 
 
 class CarViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,11 @@ class CarViewSet(viewsets.ModelViewSet):
     filterset_class = CarFilter
     ordering_fields = ["year", "mileage", "base_price", "discount_price", "created_at"]
     search_fields = ["vin", "make", "model", "color"]
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return CarListSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self):
         qs = super().get_queryset().annotate(price=Coalesce("discount_price", "base_price"))
@@ -75,6 +80,7 @@ class CarViewSet(viewsets.ModelViewSet):
         tz = timezone.get_current_timezone()
         start_hour, end_hour = 9, 16
         slots = []
+        occupied = []
         from bookings.models import TestDrive  # lazy import to avoid circular
 
         day_start = timezone.make_aware(
@@ -89,11 +95,15 @@ class CarViewSet(viewsets.ModelViewSet):
                     status__in=[TestDrive.Status.PENDING, TestDrive.Status.APPROVED],
                 )
                 .filter(start_at__lt=slot_end, end_at__gt=slot_start)
-                .exists()
             )
-            if not overlapping and car.status not in [Car.Status.SOLD, Car.Status.REMOVED]:
-                slots.append({
-                    "start_at": slot_start.isoformat(),
-                    "end_at": slot_end.isoformat(),
+            if overlapping.exists():
+                occupied.append({
+                    "startAt": slot_start.isoformat(),
+                    "endAt": slot_end.isoformat(),
                 })
-        return Response(slots)
+            elif car.status not in [Car.Status.SOLD, Car.Status.REMOVED]:
+                slots.append({
+                    "startAt": slot_start.isoformat(),
+                    "endAt": slot_end.isoformat(),
+                })
+        return Response({"slots": slots, "occupied": occupied})

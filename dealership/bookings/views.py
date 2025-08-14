@@ -14,7 +14,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = TestDriveSerializer
 
     def get_permissions(self):
-        if self.action in ["create", "me"]:
+        if self.action in ["create", "me", "reschedule", "cancel_mine"]:
             return [IsCustomer()]
         if self.action in [
             "list",
@@ -35,7 +35,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if self.action == "me":
+        if self.action in ["me", "reschedule", "cancel_mine"]:
             return qs.filter(customer=self.request.user)
         if self.action == "retrieve" and getattr(self.request.user, "role", None) == "CUSTOMER":
             return qs.filter(customer=self.request.user)
@@ -92,5 +92,36 @@ class BookingViewSet(viewsets.ModelViewSet):
         if booking.status != TestDrive.Status.APPROVED:
             return Response({"detail": "Only approved bookings can be marked as no-show."}, status=400)
         booking.status = TestDrive.Status.NO_SHOW
+        booking.save()
+        return Response({"status": booking.status})
+
+    @action(detail=True, methods=["patch"], url_path="reschedule")
+    def reschedule(self, request, pk=None):
+        booking = self.get_object()
+        if booking.status not in [TestDrive.Status.PENDING, TestDrive.Status.APPROVED]:
+            return Response({"detail": "Only pending or approved bookings can be rescheduled."}, status=400)
+        new_start = request.data.get("start_at")
+        if not new_start:
+            return Response({"start_at": "start_at is required"}, status=400)
+        try:
+            new_start_dt = timezone.datetime.fromisoformat(new_start)
+            if timezone.is_naive(new_start_dt):
+                new_start_dt = timezone.make_aware(new_start_dt, timezone.get_current_timezone())
+        except Exception:
+            return Response({"start_at": "Invalid datetime format"}, status=400)
+        booking.start_at = new_start_dt
+        booking.end_at = new_start_dt + timezone.timedelta(hours=1)
+        try:
+            booking.save()
+        except Exception as e:
+            return Response({"detail": str(e)}, status=400)
+        return Response({"status": booking.status, "start_at": booking.start_at, "end_at": booking.end_at})
+
+    @action(detail=True, methods=["patch"], url_path="cancel-mine")
+    def cancel_mine(self, request, pk=None):
+        booking = self.get_object()
+        if booking.status not in [TestDrive.Status.PENDING, TestDrive.Status.APPROVED]:
+            return Response({"detail": "Only pending or approved bookings can be cancelled."}, status=400)
+        booking.status = TestDrive.Status.CANCELLED
         booking.save()
         return Response({"status": booking.status})

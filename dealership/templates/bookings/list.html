@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}My Bookings — DriveWise{% endblock %}
+{% block content %}
+<h1>My Bookings</h1>
+<div class="view-toggle" role="tablist" aria-label="View mode">
+	<button role="tab" aria-selected="true" id="tab-list">List</button>
+	<button role="tab" aria-selected="false" id="tab-calendar">Calendar</button>
+</div>
+<section id="bookings-list" aria-labelledby="tab-list"></section>
+<section id="bookings-calendar" hidden aria-labelledby="tab-calendar">
+	<div id="calendar-controls">
+		<button id="cal-prev" aria-label="Previous period">‹</button>
+		<h2 id="cal-title"></h2>
+		<button id="cal-next" aria-label="Next period">›</button>
+		<select id="cal-mode" aria-label="Calendar mode">
+			<option value="month">Month</option>
+			<option value="week">Week</option>
+		</select>
+	</div>
+	<div id="calendar-grid" class="calendar-grid"></div>
+</section>
+<div id="booking-reschedule-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="res-title">
+	<div class="modal-content">
+		<h3 id="res-title">Reschedule Booking</h3>
+		<label>Date
+			<input type="date" id="res-date" />
+		</label>
+		<div id="res-slots" class="slots-grid"></div>
+		<button id="res-confirm" disabled>Confirm</button>
+		<button id="res-cancel" class="secondary">Close</button>
+	</div>
+</div>
+{% endblock %}

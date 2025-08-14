@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login — DriveWise{% endblock %}
+{% block content %}
+<h1>Login</h1>
+<form id="login-form" aria-describedby="login-help">
+	<label>Email
+		<input type="email" name="email" required autocomplete="email" />
+	</label>
+	<label>Password
+		<input type="password" name="password" required autocomplete="current-password" />
+	</label>
+	<button type="submit">Login</button>
+	<p id="login-help"><a href="/auth/forgot-password">Forgot your password?</a></p>
+</form>
+<div id="login-errors" class="form-errors" role="alert"></div>
+{% endblock %}

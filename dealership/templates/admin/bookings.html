@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin Bookings — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/dashboard">Admin</a> / Bookings</nav>
+<form id="booking-filters" class="filters">
+	<select name="status"><option value="">Any Status</option></select>
+	<input type="date" name="date_from" />
+	<input type="date" name="date_to" />
+	<button type="submit">Filter</button>
+	<button type="button" id="export-bookings">Export CSV</button>
+</form>
+<table id="bookings-table" class="table"></table>
+{% endblock %}

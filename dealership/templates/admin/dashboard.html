@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/dashboard">Admin</a> / Dashboard</nav>
+<div class="admin-quick-actions" role="toolbar" aria-label="Quick actions">
+	<button data-href="/admin/cars/new" title="Add New Car (A)">Add New Car</button>
+	<button data-href="/admin/bookings" title="View Bookings (B)">View Bookings</button>
+	<button data-href="/admin/staff" title="Manage Staff (S)">Manage Staff</button>
+	<button data-href="/admin/sales" title="Sales Report (R)">Sales Report</button>
+</div>
+<section class="cards">
+	<div class="card"><h3>Total Cars</h3><p id="metric-total-cars">—</p></div>
+	<div class="card"><h3>Pending Bookings</h3><p id="metric-pending-bookings">—</p></div>
+	<div class="card"><h3>Sales This Month</h3><p id="metric-sales-month">—</p></div>
+</section>
+<section>
+	<h2>Recent Bookings</h2>
+	<table id="recent-bookings" class="table"></table>
+</section>
+<section>
+	<h2>Top-selling Staff</h2>
+	<div id="top-staff" class="grid"></div>
+</section>
+<section>
+	<h2>Sales Chart</h2>
+	<canvas id="sales-chart" width="600" height="240" aria-label="Sales chart"></canvas>
+</section>
+{% endblock %}

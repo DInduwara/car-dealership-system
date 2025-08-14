@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Admin Staff — DriveWise{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/admin/dashboard">Admin</a> / Staff</nav>
+<div class="admin-quick-actions" role="toolbar">
+	<a class="button" href="/admin/staff/new">Add Staff</a>
+</div>
+<table id="staff-table" class="table"></table>
+<div id="staff-metrics-drawer" class="drawer" hidden aria-label="Staff metrics"></div>
+{% endblock %}
